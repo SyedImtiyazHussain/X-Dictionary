@@ -1,25 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
 
-function App() {
+export default function App() {
+  const [searchText, setSearchText] = useState("");
+  const [meaning, setMeaning] = useState("");
+  const [searchState, setSearchState] = useState(false);
+  const Dictionary = [
+    {
+      word: "React",
+      meaning: "A JavaScript library for building user interfaces.",
+    },
+    { word: "Component", meaning: "A reusable building block in React." },
+    { word: "State", meaning: "An object that stores data for a component." },
+  ];
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const foundWord = Dictionary.find(
+      (item) => item.word.toLowerCase() === searchText.toLowerCase()
+    );
+    if (foundWord) {
+      setMeaning(foundWord.meaning);
+      setSearchState(true);
+    } else {
+      setMeaning("");
+      setSearchState(true);
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Dictionary App</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+        <button type="submit">Search</button>
+      </form>
+      <h4>Definition:</h4>
+      {searchState === true ? (
+        meaning ? (
+          <p>{meaning}</p>
+        ) : (
+          <p>Word not found in dictionary</p>
+        )
+      ) : (
+        ""
+      )}
     </div>
   );
 }
-
-export default App;
