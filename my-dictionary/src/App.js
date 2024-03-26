@@ -44,7 +44,7 @@ export default function App() {
         meaning ? (
           <p>{meaning}</p>
         ) : (
-          <p>Word not found in dictionary</p>
+          <p>Word not found in the dictionary</p>
         )
       ) : (
         ""
